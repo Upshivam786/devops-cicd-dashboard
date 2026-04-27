@@ -1,13 +1,19 @@
-image: node:22
+image: atlassian/default-image:3
 
 pipelines:
   default:
     - step:
-        name: Install & Build React App
+        name: Build React + Docker Image
+        services:
+          - docker
         caches:
           - node
         script:
           - npm install
           - npm run build
-        artifacts:
-          - dist/**
+          - docker build -t frontend-app .
+
+definitions:
+  services:
+    docker:
+      memory: 2048

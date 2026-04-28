@@ -116,6 +116,51 @@ This project helped build practical knowledge of:
 
 ---
 
+
+---
+
+## 🚀 Live System
+
+🌐 Production URL:
+http://34.29.30.10:8080/
+
+---
+
+## 📊 Features
+
+- Real-time CI/CD dashboard UI
+- Deployment counter tracking
+- Pipeline success monitoring
+- Build history visibility
+- Infrastructure overview (GCP VM, container, ports)
+- Auto deployment after git push
+
+---
+
+## 🛠️ DevOps Highlights
+
+- Bitbucket Pipelines multi-stage CI/CD
+- Docker image build & deployment automation
+- Secure SSH key-based VM deployment
+- Firewall and networking configuration on GCP
+- Production container lifecycle management
+- Debugging pipeline authentication issues
+
+---
+
+## 📚 Key Learnings
+
+- Real-world CI/CD pipeline design
+- Debugging SSH public key authentication issues
+- GCP VM deployment & firewall configuration
+- Docker container production deployment
+- Handling pipeline failures in production systems
+
+---
+
+## 💡 Architecture
+
+
 ## 👨‍💻 Author
 
 Shivam Upadhyay

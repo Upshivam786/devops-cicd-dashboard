@@ -2,16 +2,30 @@ image: node:22
 
 pipelines:
   default:
+    - parallel:
+        - step:
+            name: Lint Check
+            caches:
+              - node
+            script:
+              - npm install
+              - npm run lint
+
+        - step:
+            name: React Build
+            caches:
+              - node
+            script:
+              - npm install
+              - npm run build
+            artifacts:
+              - dist/**
+
     - step:
-        name: Main Branch CI
+        name: Docker Build
         services:
           - docker
-        caches:
-          - node
         script:
-          - npm install
-          - npm run lint
-          - npm run build
           - docker build -t frontend-app .
 
   pull-requests:

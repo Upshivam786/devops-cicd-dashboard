@@ -1,3 +1,6 @@
+## architecture.png
+
+
 # 🚀 Frontend Docker CI/CD Deployment
 
 A production-ready frontend deployment project demonstrating a complete CI/CD pipeline using Bitbucket Pipelines, Docker, Docker Hub, and Google Cloud Platform.

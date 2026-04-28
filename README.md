@@ -1,4 +1,4 @@
-## architecture.png
+![Alt Text](architecture.png)
 
 
 # 🚀 Frontend Docker CI/CD Deployment

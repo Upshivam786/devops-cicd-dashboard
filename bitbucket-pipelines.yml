@@ -3,15 +3,27 @@ image: atlassian/default-image:3
 pipelines:
   default:
     - step:
-        name: Build React + Docker Image
+        name: Main Branch CI
         services:
           - docker
         caches:
           - node
         script:
           - npm install
+          - npm run lint
           - npm run build
           - docker build -t frontend-app .
+
+  pull-requests:
+    '**':
+      - step:
+          name: PR Validation
+          caches:
+            - node
+          script:
+            - npm install
+            - npm run lint
+            - npm run build
 
 definitions:
   services:

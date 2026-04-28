@@ -19,8 +19,6 @@ pipelines:
               script:
                 - npm install
                 - npm run build
-              artifacts:
-                - dist/**
 
       - step:
           name: Docker Build & Push
@@ -37,12 +35,12 @@ pipelines:
             - apt-get update && apt-get install -y openssh-client
             - echo "$SSH_PRIVATE_KEY_B64" | base64 -d > /tmp/id_rsa
             - chmod 600 /tmp/id_rsa
-            - ssh -i /tmp/id_rsa -o StrictHostKeyChecking=no shivam_u@34.29.30.10 '
+            - ssh -o StrictHostKeyChecking=no -i /tmp/id_rsa shivam_u@34.29.30.10 "
                 docker pull upshivam786/frontend-app:latest &&
                 docker stop frontend-app || true &&
                 docker rm frontend-app || true &&
                 docker run -d -p 8080:80 --restart always --name frontend-app upshivam786/frontend-app:latest
-              '
+              "
 
   pull-requests:
     '**':

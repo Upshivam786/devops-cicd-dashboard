@@ -22,15 +22,24 @@ pipelines:
               - dist/**
 
     - step:
-        name: Docker Build & Push (CD)
-        services:
-          - docker
+        name: Docker Build & Push
         script:
           - docker build -t $DOCKER_USERNAME/frontend-app:latest .
-
           - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-
           - docker push $DOCKER_USERNAME/frontend-app:latest
+
+    - step:
+        name: Deploy to Server (REAL CD)
+        script:
+          - pipe: atlassian/ssh-run:0.6.1
+            variables:
+              SSH_USER: user
+              SERVER: 192.168.9.124
+              COMMAND: |
+                docker pull $DOCKER_USERNAME/frontend-app:latest
+                docker stop frontend-app || true
+                docker rm frontend-app || true
+                docker run -d -p 8080:80 --name frontend-app $DOCKER_USERNAME/frontend-app:latest
 
   pull-requests:
     '**':
@@ -42,8 +51,3 @@ pipelines:
             - npm install
             - npm run lint
             - npm run build
-
-definitions:
-  services:
-    docker:
-      memory: 2048

@@ -27,6 +27,9 @@ pipelines:
           - docker
         script:
           - docker build -t frontend-app .
+          - docker run -d -p 8080:80 frontend-app
+          - sleep 5
+          - curl -I http://localhost:8080
 
   pull-requests:
     '**':

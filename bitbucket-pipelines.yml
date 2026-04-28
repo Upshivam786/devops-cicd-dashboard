@@ -22,13 +22,14 @@ pipelines:
               - dist/**
 
     - step:
-        name: Docker Build and Push (CD)
+        name: Docker Build & Push (CD)
         services:
           - docker
         script:
           - docker build -t $DOCKER_USERNAME/frontend-app:latest .
+
           - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-          - docker run -d -p 8080:80 frontend-app
+
           - docker push $DOCKER_USERNAME/frontend-app:latest
 
   pull-requests:

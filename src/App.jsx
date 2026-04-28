@@ -12,7 +12,7 @@ function Card({ title, value }) {
 
 function App() {
   const [deployments, setDeployments] = useState(24);
-  const [status, setStatus] = useState("Success");
+  const status = "Success";
   const [updated, setUpdated] = useState(new Date().toLocaleTimeString());
 
   function deployNow() {

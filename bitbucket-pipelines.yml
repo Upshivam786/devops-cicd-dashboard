@@ -23,6 +23,8 @@ pipelines:
 
     - step:
         name: Docker Build & Push
+        services:
+          - docker
         script:
           - docker build -t $DOCKER_USERNAME/frontend-app:latest .
           - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
@@ -51,3 +53,8 @@ pipelines:
             - npm install
             - npm run lint
             - npm run build
+
+definitions:
+  services:
+    docker:
+      memory: 2048

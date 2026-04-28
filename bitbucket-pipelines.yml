@@ -1,48 +1,49 @@
 image: node:22
 
 pipelines:
-  default:
-    - parallel:
-        - step:
-            name: Lint Check
-            caches:
-              - node
-            script:
-              - npm install
-              - npm run lint
+  branches:
+    main:
+      - parallel:
+          - step:
+              name: Lint Check
+              caches:
+                - node
+              script:
+                - npm install
+                - npm run lint
 
-        - step:
-            name: React Build
-            caches:
-              - node
-            script:
-              - npm install
-              - npm run build
-            artifacts:
-              - dist/**
+          - step:
+              name: React Build
+              caches:
+                - node
+              script:
+                - npm install
+                - npm run build
+              artifacts:
+                - dist/**
 
-    - step:
-        name: Docker Build & Push
-        services:
-          - docker
-        script:
-          - docker build -t $DOCKER_USERNAME/frontend-app:latest .
-          - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
-          - docker push $DOCKER_USERNAME/frontend-app:latest
+      - step:
+          name: Docker Build & Push
+          services:
+            - docker
+          script:
+            - echo $DOCKER_PASSWORD | docker login -u $DOCKER_USERNAME --password-stdin
+            - docker build -t $DOCKER_USERNAME/frontend-app:latest .
+            - docker push $DOCKER_USERNAME/frontend-app:latest
 
-    - step:
-        name: Deploy to Server (REAL CD)
-        script:
-          - pipe: atlassian/ssh-run:0.6.1
-            variables:
-              SSH_USER: $SSH_USER
-              SERVER: $SSH_HOST
-              SSH_KEY: $SSH_PRIVATE_KEY
-              COMMAND: |
-                docker pull $DOCKER_USERNAME/frontend-app:latest
-                docker stop frontend-app || true
-                docker rm frontend-app || true
-                docker run -d -p 8080:80 --name frontend-app $DOCKER_USERNAME/frontend-app:latest
+      - step:
+          name: Deploy to GCP VM
+          script:
+            - pipe: atlassian/ssh-run:0.6.1
+              variables:
+                SSH_USER: $SSH_USER
+                SERVER: $SSH_HOST
+                SSH_KEY: $SSH_PRIVATE_KEY
+                COMMAND: |
+                  docker pull $DOCKER_USERNAME/frontend-app:latest
+                  docker stop frontend-app || true
+                  docker rm frontend-app || true
+                  docker run -d -p 8080:80 --restart always --name frontend-app $DOCKER_USERNAME/frontend-app:latest
 
   pull-requests:
     '**':

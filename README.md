@@ -1,17 +1,123 @@
-# React + Vite
+# 🚀 Frontend Docker CI/CD Deployment
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A production-ready frontend deployment project demonstrating a complete CI/CD pipeline using Bitbucket Pipelines, Docker, Docker Hub, and Google Cloud Platform.
 
-Currently, two official plugins are available:
+## 📌 Project Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+This project automates the build, packaging, and deployment of a React frontend application to a Google Cloud VM.
 
-## React Compiler
+Every push to the `main` branch automatically triggers:
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+1. Code lint checks
+2. Production build
+3. Docker image creation
+4. Push to Docker Hub
+5. SSH deployment to GCP VM
+6. Container restart with latest version
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
-# refresh
+## 🛠 Tech Stack
+
+* React + Vite
+* Docker
+* Bitbucket Pipelines
+* Docker Hub
+* Google Cloud Compute Engine
+* Linux
+* SSH Keys
+
+---
+
+## ⚙️ CI/CD Architecture
+
+Developer Push → Bitbucket Repository → Bitbucket Pipeline
+
+Pipeline Stages:
+
+* Lint Check
+* Build React App
+* Build Docker Image
+* Push to Docker Hub
+* SSH into GCP VM
+* Pull Latest Image
+* Restart Container
+
+---
+
+## 🌍 Live Deployment
+
+Application running on GCP VM:
+
+`http://34.29.30.10:8080`
+
+---
+
+## 📁 Project Structure
+
+```bash
+.
+├── src/
+├── public/
+├── Dockerfile
+├── bitbucket-pipelines.yml
+├── package.json
+└── README.md
+```
+
+---
+
+## 🐳 Docker Commands
+
+Build locally:
+
+```bash
+docker build -t frontend-app .
+```
+
+Run locally:
+
+```bash
+docker run -d -p 8080:80 frontend-app
+```
+
+---
+
+## 🔐 Environment Variables Used
+
+Configured securely in Bitbucket Repository Variables:
+
+* `DOCKER_USERNAME`
+* `DOCKER_PASSWORD`
+* `SSH_PRIVATE_KEY_B64`
+
+---
+
+## 💡 Challenges Solved
+
+* SSH authentication failures
+* Firewall port access
+* CI/CD YAML debugging
+* Docker image redeployment
+* Secure remote server access
+
+---
+
+## 📈 Key Learnings
+
+This project helped build practical knowledge of:
+
+* Continuous Integration
+* Continuous Deployment
+* Containerization
+* Cloud VM operations
+* Linux server administration
+* Secure deployments
+
+---
+
+## 👨‍💻 Author
+
+Shivam Upadhyay
+
+If you found this project interesting, feel free to connect on LinkedIn.

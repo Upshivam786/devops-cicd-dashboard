@@ -35,8 +35,9 @@ pipelines:
         script:
           - pipe: atlassian/ssh-run:0.6.1
             variables:
-              SSH_USER: user
-              SERVER: 192.168.9.124
+              SSH_USER: $SSH_USER
+              SERVER: $SSH_HOST
+              SSH_KEY: $SSH_PRIVATE_KEY
               COMMAND: |
                 docker pull $DOCKER_USERNAME/frontend-app:latest
                 docker stop frontend-app || true
